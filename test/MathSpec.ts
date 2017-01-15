@@ -89,35 +89,76 @@ describe("MathSpec", function () {
         })
     });
 
-    it("Add should return error if no valid arrays are found", function () {
+    it("Add should return error if invalid Json(1)", function () {
         return math.add(['http://skaha.cs.ubc.ca:11313/jdw3.json']).then(function (value: number) {
             //console.log(value);
             Log.test('Value: ' + value);
             expect.fail();
         }).catch(function (err) {
             Log.test(err);
-            expect(err).to.equal('Error: URL could not be retrieved');
+            expect(err).to.equal('Error: Could not parse JSON');
         })
     });
 
-    it("Add should return error if no valid arrays are found", function () {
+    it("Add should return error if invalid Json(2)", function () {
         return math.add(['http://skaha.cs.ubc.ca:11313/jdw3.json','http://skaha.cs.ubc.ca:11313/4968.json']).then(function (value: number) {
             //console.log(value);
             Log.test('Value: ' + value);
             expect.fail();
         }).catch(function (err) {
             Log.test(err);
-            expect(err).to.equal('Error: URL could not be retrieved');
+            expect(err).to.equal('Error: Could not parse JSON');
         })
     });
 
-    it("Add should return error if no valid arrays are found", function () {
+    it("Add should return error if invalid Json(3)", function () {
         return math.add(['http://skaha.cs.ubc.ca:11313/4968.json','http://skaha.cs.ubc.ca:11313/jdw3.json']).then(function (value: number) {
             //console.log(value);
             Log.test('Value: ' + value);
             expect.fail();
         }).catch(function (err) {
             Log.test(err);
+            expect(err).to.equal('Error: Could not parse JSON');
+        })
+    });
+
+    it("Add should return error if no valid arrays are found", function () {
+        return math.add(['http://skaha.cs.ubc.ca:11313/7b77.json','http://skaha.cs.ubc.ca:11313/jdw3.json']).then(function (value: number) {
+            //console.log(value);
+            Log.test('Value: ' + value);
+            expect.fail();
+        }).catch(function (err) {
+            Log.test(err);
+            expect(err).to.equal('Error: Could not parse JSON');
+        })
+    });
+
+    it("Add should return 0 if no url", function () {
+        return math.add([]).then(function (value: number) {
+            Log.test('Value: ' + value);
+            expect.fail();
+        }).catch(function (err) {
+            Log.test('Error: ' + err);
+            expect(err).to.equal('Error: No number was provided');
+        })
+    });
+
+    it("Add should return error if invalid url", function () {
+        return math.add(['www.baidu.com']).then(function (value: number) {
+            Log.test('Value: ' + value);
+            expect.fail();
+        }).catch(function (err) {
+            Log.test('Error: ' + err);
+            expect(err).to.equal('Error: URL could not be retrieved');
+        })
+    });
+
+    it("Add should return error if invalid url", function () {
+        return math.add(['http://skaha.cs.ubc.ca:11313/4968.json','www.baidu.com']).then(function (value: number) {
+            Log.test('Value: ' + value);
+            expect.fail();
+        }).catch(function (err) {
+            Log.test('Error: ' + err);
             expect(err).to.equal('Error: URL could not be retrieved');
         })
     });
@@ -217,24 +258,37 @@ describe("MathSpec", function () {
         })
     });
 
-    it("Multiply should return 0", function () {
+    it("Multiply should return 0 if no url", function () {
         return math.multiply([]).then(function (value: number) {
             Log.test('Value: ' + value);
-            expect(value).to.equal(0);
+            expect.fail();
         }).catch(function (err) {
             Log.test('Error: ' + err);
-            expect.fail();
+            expect(err).to.equal('Error: No number was provided');
+
         })
     });
 
-    it("Add should return 0", function () {
-        return math.add([]).then(function (value: number) {
+    it("Multiply should return error if invalid url", function () {
+        return math.multiply(['www.baidu.com']).then(function (value: number) {
             Log.test('Value: ' + value);
-            expect(value).to.equal(0);
+            expect.fail();
         }).catch(function (err) {
             Log.test('Error: ' + err);
-            expect.fail();
+            expect(err).to.equal('Error: URL could not be retrieved');
         })
     });
+
+    it("Multiply should return error if invalid url", function () {
+        return math.multiply(['http://skaha.cs.ubc.ca:11313/4968.json','www.baidu.com']).then(function (value: number) {
+            Log.test('Value: ' + value);
+            expect.fail();
+        }).catch(function (err) {
+            Log.test('Error: ' + err);
+            expect(err).to.equal('Error: URL could not be retrieved');
+        })
+    });
+
+
 
 });

@@ -24,21 +24,26 @@ export default class Math implements IMath {
             let ifnum: boolean = false;
             let processList:Promise<any>[] = [];
             if (urls === undefined || urls.length == 0) {
-                fulfill(0);
+                reject('Error: No number was provided');
             }
             for(let k = 0; k < urls.length; k++) {
-                var options = {uri: urls[k],};
+                var options = {uri: urls[k],};//
+                rp(options)
+                    .then(function (repos) {})
+                    .catch(function (err) {
+                        reject('Error: URL could not be retrieved');
+                    });
                 processList.push(rp(options));
             }
             Promise.all(processList).then(function(num:string[]){
-                //console.log(num);
+                console.log(num);
 
                 for(let re of num){
                     let parsedJson: {[id: string]: any;};
                     try {
                         parsedJson = JSON.parse(re);
                     }catch(e){
-                        reject('Error: URL could not be retrieved');
+                        reject('Error: Could not parse JSON');
                     }
                     // 1. For Json Array
                     if(parsedJson instanceof  Array){
@@ -52,7 +57,7 @@ export default class Math implements IMath {
                     // 2. For Json Object
                     else{
                         let jsonString: string[] = Object.keys(parsedJson);
-                        //console.log(jsonString);
+                        console.log(jsonString);
                         for (let x of jsonString) {
                             if (parsedJson[x] instanceof Array) {
                                 for (let y of parsedJson[x]) {
@@ -85,10 +90,15 @@ export default class Math implements IMath {
             let ifnum: boolean = false;
             let processList:Promise<any>[] = [];
             if (urls === undefined || urls.length == 0) {
-                fulfill(0);
+                reject('Error: No number was provided');
             }
             for(let k = 0; k < urls.length; k++) {
                 var options = {uri: urls[k],};
+                rp(options)
+                    .then(function (repos) {})
+                    .catch(function (err) {
+                        reject('Error: URL could not be retrieved');
+                    });
                 processList.push(rp(options));
             }
             Promise.all(processList).then(function(num:string[]){
